@@ -1,11 +1,14 @@
 int numLines = 6;
 int numPoints = 5;
 color[] pointColours = {color(250, 16, 64), color(216, 16, 255), color(255, 216, 32), color(64, 196, 255), color(0, 255, 32)}; //should be at least as long as numPoints
+String[] parameterNames = {"Frequency", "Amplitude", "Timbre", "Duration", "Point of Occurrence", "Event Structure"}; //should be at least as long as numLines
 Point[] points = new Point[numPoints];
 Line[] lines = new Line[numLines];
 PVector zero = new PVector(0., 0.);
 PVector dimensions;
+PVector mouseV = new PVector(0., 0.);
 float cornerAvoidance = 0.1; // 
+int minMouseDistance = 30;
 
 void setup() {
   size(1024, 512);
@@ -18,19 +21,39 @@ void draw() {
   background(0);
   stroke(255);
   strokeWeight(2);
+  mouseV.x = mouseX;
+  mouseV.y = mouseY;
+  
   for (Line line: lines) { //<>//
     line.display();
   }
   
   for (Point point: points) {
-    point.display(1);
+    float d = point.p.dist(mouseV);
+    if (d < minMouseDistance) {
+      point.displayingLines = 1;
+    }
+    else {
+      point.displayingLines = 0;
+    }
+    point.display();
   }
 
 }
 
 void mousePressed() {
+   for (Point point: points) {
+    if (point.displayingLines == 1) {
+      for (int i = 0; i < numLines; i++) {
+        println(parameterNames[i] + ": " + point.distanceLines[i].magnitude());
+      }
+      println();
+    }
+  }
+}
+
+void keyReleased() {
   createVariationsMap();
-  println();
 }
 
 void createVariationsMap() {
@@ -55,7 +78,7 @@ Line generateLine(PVector d) {
   intList.shuffle();
   PVector p1 = getRandomSidePoint(intList.remove(0), d);
   PVector p2 = getRandomSidePoint(intList.remove(0), d);
-  println(p1, p2);
+  //println(p1, p2);
   return new Line(p1, p2);
 }
 

@@ -24,6 +24,10 @@ class Line {
   
   }
   
+  float magnitude() {
+    return PVector.sub(p1, p2).mag();
+  }
+  
   PVector closestPoint(PVector P) {
     //y = ax + b
     //0 = ax + b - y
@@ -49,6 +53,7 @@ class Point {
   PVector p;
   color c;
   Line[] distanceLines;
+  int displayingLines = 0;
   
   Point (PVector p, color c) {
     this.p = p;
@@ -64,11 +69,11 @@ class Point {
     }
   }
 
-  void display(int displayLines) {
+  void display() {
     strokeWeight(16);
     stroke(c);
     point(p.x, p.y);
-    if (displayLines == 1) {
+    if (displayingLines == 1) {
       strokeWeight(2);
       for (Line l: this.distanceLines) {
         l.display();
