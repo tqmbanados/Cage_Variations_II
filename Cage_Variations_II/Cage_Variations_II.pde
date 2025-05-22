@@ -4,9 +4,11 @@ color[] pointColours = {color(250, 16, 64), color(216, 16, 255), color(255, 216,
 String[] parameterNames = {"Frequency", "Amplitude", "Timbre", "Duration", "Point of Occurrence", "Event Structure"}; //should be at least as long as numLines
 Point[] points = new Point[numPoints];
 Line[] lines = new Line[numLines];
+
 PVector zero = new PVector(0., 0.);
 PVector dimensions;
 PVector mouseV = new PVector(0., 0.);
+
 float cornerAvoidance = 0.1; // 
 int minMouseDistance = 30;
 
@@ -53,7 +55,14 @@ void mousePressed() {
 }
 
 void keyReleased() {
-  createVariationsMap();
+  if (key == ' ') {
+    createVariationsMap();    
+  }
+  else if (key == 's') {
+    String filename = "Cage_Variations_II" + year() + month() + day() + "_" + hour() + "-" + "-####.png";
+    saveFrame("savedFrames/" + filename);
+  }
+
 }
 
 void createVariationsMap() {
