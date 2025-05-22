@@ -58,9 +58,10 @@ void keyReleased() {
   if (key == ' ') {
     createVariationsMap();    
   }
-  else if (key == 's') {
+  else if (key == RETURN || key == ENTER) {
     String filename = "Cage_Variations_II" + year() + month() + day() + "_" + hour() + "-" + "-####.png";
     saveFrame("savedFrames/" + filename);
+    println("test");
   }
 
 }
