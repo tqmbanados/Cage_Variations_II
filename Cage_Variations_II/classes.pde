@@ -54,11 +54,13 @@ class Point {
   color c;
   Line[] distanceLines;
   int displayingLines = 0;
+  String name;
   
-  Point (PVector p, color c) {
+  Point (PVector p, color c, String name) {
     this.p = p;
     this.c = c;
     this.distanceLines = new Line[numLines];
+    this.name = name;
   }
   
   void createLines(Line[] ls) {

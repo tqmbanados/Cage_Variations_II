@@ -1,6 +1,7 @@
 int numLines = 6;
 int numPoints = 5;
 color[] pointColours = {color(250, 16, 64), color(216, 16, 255), color(255, 216, 32), color(64, 196, 255), color(0, 255, 32)}; //should be at least as long as numPoints
+String[] pointNames = {"Red", "Magenta", "Yellow", "Blue", "Green"};
 String[] parameterNames = {"Frequency", "Amplitude", "Timbre", "Duration", "Point of Occurrence", "Event Structure"}; //should be at least as long as numLines
 Point[] points = new Point[numPoints];
 Line[] lines = new Line[numLines];
@@ -13,7 +14,7 @@ float cornerAvoidance = 0.1; //
 int minMouseDistance = 30;
 
 void setup() {
-  size(1024, 512);
+  size(512, 512);
   background(0);
   dimensions = new PVector(float(width), float(height));
   createVariationsMap();
@@ -46,8 +47,9 @@ void draw() {
 void mousePressed() {
    for (Point point: points) {
     if (point.displayingLines == 1) {
+      println(point.name + ":");
       for (int i = 0; i < numLines; i++) {
-        println(parameterNames[i] + ": " + point.distanceLines[i].magnitude());
+        println(TAB + parameterNames[i] + ": " + point.distanceLines[i].magnitude());
       }
       println();
     }
@@ -61,7 +63,6 @@ void keyReleased() {
   else if (key == RETURN || key == ENTER) {
     String filename = "Cage_Variations_II" + year() + month() + day() + "_" + hour() + "-" + "-####.png";
     saveFrame("savedFrames/" + filename);
-    println("test");
   }
 
 }
@@ -76,7 +77,8 @@ void createVariationsMap() {
     float x = random(cornerAvoidance, 1. - cornerAvoidance) * dimensions.x;
     float y = random(cornerAvoidance, 1. - cornerAvoidance) * dimensions.y;
     color c = pointColours[i];
-    Point p = new Point(new PVector(x, y), c);
+    String name = pointNames[i];
+    Point p = new Point(new PVector(x, y), c, name);
     p.createLines(lines);
     points[i] = p;
   } 
