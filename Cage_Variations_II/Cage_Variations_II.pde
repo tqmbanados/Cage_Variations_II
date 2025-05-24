@@ -26,7 +26,7 @@ void draw() {
   strokeWeight(2);
   mouseV.x = mouseX;
   mouseV.y = mouseY;
-  
+
   for (Line line: lines) { //<>//
     line.display();
   }
@@ -41,10 +41,14 @@ void draw() {
     }
     point.display();
   }
-
+  fill(255);
+  textSize(32);
+  text("TESTING", mouseX, mouseY, textWidth("TESTING") + 1, 30);
+  //rect(mouseX, mouseY, textWidth("TESTING"), textAscent());
 }
 
 void mousePressed() {
+   println(mouseX, mouseY);
    for (Point point: points) {
     if (point.displayingLines == 1) {
       println(point.name + ":");

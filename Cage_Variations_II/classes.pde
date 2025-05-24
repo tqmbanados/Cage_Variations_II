@@ -1,3 +1,13 @@
+static class Math {
+  //static class with some math functions 
+  int checkRectCollision(PVector[] rect1, PVector[] rect2) {
+    //takes rects defined as two vectors, 1 for origin, 2 for dimension
+       
+    return 1;
+  }
+}
+
+
 class Line {
   // Line definition using two points
   PVector p1;
@@ -82,11 +92,46 @@ class Point {
       }
     }
   }
- 
+}
 
+class Label {
+ // used to print non overlapping text on screen
+ PVector startPos;
+ PVector currentPos;
+ String text;
 
+  Label (PVector pos, String text) {
+    this.startPos = pos;
+    this.currentPos = pos;
+    this.text = text;
+  
+  }
+  
+  float[] getBounds() {
+    //returns bounding box of label with current font
+    float w = textWidth(text) + 1;
+    float h = textAscent() + textDescent() + 1;
+    float[] bounds = {currentPos.x, currentPos.y, w, h};
+    return bounds;
+  }
+  
+  boolean checkBounds(float[] allBounds, float[] thisBounds) {
+    // test if text fits, return 1
+    return true;
+  
+  }
+  
+  boolean checkInside(float[] thisBounds) {
+    if (thisBounds[0] < 0 || thisBounds[1] < 0 || (thisBounds[0] + thisBounds[2]) > width || (thisBounds[1] + thisBounds[3]) > height) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+  
 
-
+  
 }
   
   
