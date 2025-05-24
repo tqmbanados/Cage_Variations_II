@@ -22,7 +22,7 @@ void setup() {
 
 void draw() {
   background(0);
-  stroke(255);
+  stroke(127);
   strokeWeight(2);
   mouseV.x = mouseX;
   mouseV.y = mouseY;

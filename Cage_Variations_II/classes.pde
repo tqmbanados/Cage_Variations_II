@@ -1,9 +1,29 @@
 static class Math {
   //static class with some math functions 
-  int checkRectCollision(PVector[] rect1, PVector[] rect2) {
-    //takes rects defined as two vectors, 1 for origin, 2 for dimension
-       
-    return 1;
+  
+  static boolean checkRectCollision(float[] r1, float[] r2) {
+    //vectors defined as float array as follows {x, y, width, height}
+    // code adapted from https://www.jeffreythompson.org/collision-detection/rect-rect.php
+    if (r1[0] + r1[2] >= r2[0]         &&    
+        r1[0]         <= r2[0] + r2[2] &&   
+        r1[1] + r1[3] >= r2[1]         &&    
+        r1[1]         <= r2[1] + r2[3])   {    
+          return true;
+    }
+    return false;
+  }
+  
+  static PVector polar2cartesian(float r, float a) {
+    float x = r * cos(a);
+    float y = r * sin(a);
+    return new PVector(x, y);
+  }
+  
+  static float[] cartesian2polar(PVector pos) {
+    float r = pos.mag();
+    float a = atan2(pos.y, pos.x);
+    float[] res = {r, a};
+    return res;
   }
 }
 
@@ -115,13 +135,16 @@ class Label {
     return bounds;
   }
   
-  boolean checkBounds(float[] allBounds, float[] thisBounds) {
-    // test if text fits, return 1
-    return true;
-  
+  boolean checkBounds(float[][] allBounds, float[] thisBounds) {
+    // test if text has collision, return 1                 
+    for (float[] bound: allBounds) {
+      if (Math.checkRectCollision(bound, thisBounds)) {return true;}
+    }
+    return false;
   }
   
   boolean checkInside(float[] thisBounds) {
+    //returns true if text is inside the screen
     if (thisBounds[0] < 0 || thisBounds[1] < 0 || (thisBounds[0] + thisBounds[2]) > width || (thisBounds[1] + thisBounds[3]) > height) {
       return false;
     }
